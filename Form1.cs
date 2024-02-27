@@ -127,11 +127,36 @@ namespace A16_IzlozbaPasa_b
             if(broj > 0)
             {
                 MessageBox.Show("Pas je vec prijavljen za izlozbu u toj kategoriji");
+                konekcija.Close();
                 return;
             }
             konekcija.Close();
-
             // prijava psa na izlozbu
+            string sqlPrijava= "INSERT INTO Rezultat " +
+                "(PasID, IzlozbaID, KategorijaID) " +
+                "VALUES (@PasID, @IzlozbaID, @KategorijaID)";
+            SqlCommand komandaPrijava = new 
+                SqlCommand(sqlPrijava, konekcija);
+            komandaPrijava.Parameters.AddWithValue
+                ("@PasID", comboBoxPas.SelectedValue);
+            komandaPrijava.Parameters.AddWithValue
+                ("@IzlozbaID", comboBoxIzlozba.SelectedValue);
+            komandaPrijava.Parameters.AddWithValue
+                ("@KategorijaID", comboBoxKategorija.SelectedValue);
+            try
+            {
+                konekcija.Open();
+                komandaPrijava.ExecuteNonQuery();
+                MessageBox.Show("Pas je uspesno prijavljen za izlozbu");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska pri prijavi:" + ex.Message);
+            }
+            finally
+            {
+                konekcija.Close();
+            }
         }
     }
 }
