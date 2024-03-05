@@ -27,7 +27,8 @@ namespace A16_IzlozbaPasa_b
                     (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\A16.mdf;Integrated Security=True");
                 //citanje iz baze
                 OsveziPse();
-                OsveziIzlozbe();
+                OsveziIzlozbe1();
+                OsveziIzlozbe2();
                 OsveziKategorije();
             }
             catch (Exception)
@@ -57,17 +58,19 @@ namespace A16_IzlozbaPasa_b
             }
         }
         // popunjavanje comboboxa za Izlozbe
-        private void OsveziIzlozbe()
+        private void OsveziIzlozbe1()
         {
             try
             {
-                SqlCommand komanda = new SqlCommand("SELECT IzlozbaID, " +
+                SqlCommand komanda = new SqlCommand(
+                    "SELECT IzlozbaID, " +
                     "CONCAT(IzlozbaID,' - ',Mesto,' - ',Datum)" +
-                    "AS NazivIzlozbe FROM Izlozba", konekcija);
+                    "AS NazivIzlozbe " +
+                    "FROM Izlozba " +
+                    "WHERE Datum>=GETDATE()", konekcija);
                 SqlDataAdapter adapter = new SqlDataAdapter(komanda);
                 DataTable tabela = new DataTable();
                 adapter.Fill(tabela);
-                comboBoxIzlozba.Items.Clear();
                 comboBoxIzlozba.DataSource = tabela;
                 comboBoxIzlozba.DisplayMember = "NazivIzlozbe";
                 comboBoxIzlozba.ValueMember = "IzlozbaID";
@@ -78,6 +81,30 @@ namespace A16_IzlozbaPasa_b
                 MessageBox.Show("Greska u citanju izlozbe:" + ex.Message);
             }
         }
+        private void OsveziIzlozbe2()
+        {
+            try
+            {
+                SqlCommand komanda = new SqlCommand(
+                    "SELECT IzlozbaID, " +
+                    "CONCAT(IzlozbaID,' - ',Mesto,' - ',Datum)" +
+                    "AS NazivIzlozbe " +
+                    "FROM Izlozba " +
+                    "WHERE Datum<=GETDATE()", konekcija);
+                SqlDataAdapter adapter = new SqlDataAdapter(komanda);
+                DataTable tabela = new DataTable();
+                adapter.Fill(tabela);
+                comboBox1.DataSource = tabela;
+                comboBox1.DisplayMember = "NazivIzlozbe";
+                comboBox1.ValueMember = "IzlozbaID";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska u citanju izlozbe:" + ex.Message);
+            }
+        }
+
         // popunjavanje comboboxa kategorija
         private void OsveziKategorije()
         {
@@ -156,6 +183,41 @@ namespace A16_IzlozbaPasa_b
             finally
             {
                 konekcija.Close();
+            }
+        }
+
+        private void buttonIzadji_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonPrikazi_Click(object sender, EventArgs e)
+        {
+            DataTable tabela= new DataTable();
+            try
+            {
+                string upit="SELECT k.KategorijaID AS Sifra, " +
+                    "k.Naziv AS NazivKategorije, " +
+                    "COUNT(*) AS BrojPasa " +
+                    "FROM Kategorija k, Rezultat r " +
+                    "WHERE k.KategorijaID=r.KategorijaID " +
+                    "AND r.IzlozbaID=@IzlozbaID " +
+                    "AND LEN(r.Napomena)>0 " +
+                    "GROUP BY k.KategorijaID, k.Naziv";
+                SqlDataAdapter adapter = new 
+                    SqlDataAdapter(upit, konekcija);
+                adapter.SelectCommand.Parameters.AddWithValue
+                    ("@IzlozbaID", comboBox1.SelectedValue);
+                adapter.Fill(tabela);
+                dataGridView1.DataSource = tabela;
+                chart1.DataSource = tabela;
+                chart1.Series[0].XValueMember = "NazivKategorije";
+                chart1.Series[0].YValueMembers = "BrojPasa";
+                chart1.Series[0].IsValueShownAsLabel = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska!" + ex.Message);
             }
         }
     }
