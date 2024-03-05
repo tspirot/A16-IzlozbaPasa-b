@@ -193,6 +193,7 @@ namespace A16_IzlozbaPasa_b
 
         private void buttonPrikazi_Click(object sender, EventArgs e)
         {
+            // prikazivanje rezultata
             DataTable tabela= new DataTable();
             try
             {
