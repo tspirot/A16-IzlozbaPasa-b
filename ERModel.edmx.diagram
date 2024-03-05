@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3d094fe7d68b4f8ea27dc0517e47f2eb" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="A16Model.Boja" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Duzina_Dlake" Width="1.5" PointX="0.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Izlozba" Width="1.5" PointX="7.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Kategorija" Width="1.5" PointX="7.875" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Odgajivacnice" Width="1.5" PointX="2.625" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Pas" Width="1.5" PointX="3.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Pol" Width="1.5" PointX="0.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Rasa" Width="1.5" PointX="4.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Rezultat" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="A16Model.Vlasnik" Width="1.5" PointX="5.625" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="A16Model.FK_Pas_ToBoja" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Pas_ToDuzina_Dlake" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Rezultat_Izlozba" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Rezultat_Kategorija" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Pas_ToOdgajivacnice" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Pas_ToPol" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Pas_ToRasa" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Pas_ToVlasnik" ManuallyRouted="false" />
+        <AssociationConnector Association="A16Model.FK_Rezultat_ToTable_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
